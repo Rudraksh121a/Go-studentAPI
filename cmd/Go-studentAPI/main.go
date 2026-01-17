@@ -11,15 +11,14 @@ import (
 	"time"
 
 	"github.com/Rudraksh121a/Go-studentAPI/internal/config"
+	"github.com/Rudraksh121a/Go-studentAPI/internal/http/handlers/student"
 )
 
 func main() {
 	cfg := config.MustLoad()
 
 	router := http.NewServeMux()
-	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Welcome to student api"))
-	})
+	router.HandleFunc("POST /api/students", student.New())
 
 	server := http.Server{
 		Addr:    cfg.Addr,
