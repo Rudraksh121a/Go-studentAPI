@@ -12,13 +12,21 @@ import (
 
 	"github.com/Rudraksh121a/Go-studentAPI/internal/config"
 	"github.com/Rudraksh121a/Go-studentAPI/internal/http/handlers/student"
+	"github.com/Rudraksh121a/Go-studentAPI/internal/storage/sqlite"
 )
 
 func main() {
 	cfg := config.MustLoad()
 
+	storage, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	slog.Info("Storage Initlialized", slog.String("env", cfg.Env))
+
 	router := http.NewServeMux()
-	router.HandleFunc("POST /api/students", student.New())
+	router.HandleFunc("POST /api/students", student.New(storage))
 
 	server := http.Server{
 		Addr:    cfg.Addr,
