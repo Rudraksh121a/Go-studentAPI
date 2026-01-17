@@ -1,0 +1,12 @@
+# Go
+/bin/
+/vendor/
+*.exe
+*.out
+
+# VS Code
+.vscode/
+.env
+
+go.work
+go.work.sum
